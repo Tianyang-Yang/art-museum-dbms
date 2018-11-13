@@ -110,9 +110,7 @@ def index():
   print(request.args)
 
 
-  #
-  # example of a database query
-  #
+  # get entities data from databases 
   artpieces = g.conn.execute("select name from artpieces")
   apnames = []
   for result in artpieces:
@@ -143,14 +141,6 @@ def index():
     custnames.append(result['name'])
   customers.close()
 
-
-  # cursor = g.conn.execute("SELECT name FROM test")
-  # names = []
-  # for result in cursor:
-  #   names.append(result['name'])  # can also be accessed using result[0]
-  # cursor.close()
-
-
   #
   # Flask uses Jinja templates, which is an extension to HTML where you can
   # pass data to a template and dynamically generate HTML based on the data
@@ -178,7 +168,7 @@ def index():
   #     {% endfor %}
   #
   context = dict(ap_data = apnames, exhib_data = exhibnames, gal_data = galnames, \
-  emp_data = empnames, cust_data = custnames)
+                  emp_data = empnames, cust_data = custnames)
 
 
   #
@@ -186,6 +176,7 @@ def index():
   # for example, the below file reads template/index.html
   #
   return render_template("index.html", **context)
+
 
 #
 # This is an example of a different path.  You can see it at:
@@ -195,28 +186,97 @@ def index():
 # Notice that the function name is another() rather than index()
 # The functions for each app.route need to have different names
 #
-@app.route('/another')
-def another():
-  return render_template("another.html")
+# @app.route('/another')
+# def another():
+#   return render_template("another.html")
 
+# urls decorators
 @app.route('/addap')
 def addap():
   return render_template("addap.html")
 
-# Example of adding new data to the database
-@app.route('/add', methods=['POST'])
-def add():
-  # name = request.form['name']
-  # g.conn.execute("""INSERT INTO test VALUES (NULL, ?);""", name)
+@app.route('/addexhib')
+def addexhib():
+  return render_template("addexhib.html")
+
+@app.route('/addgal')
+def addgal():
+  return render_template("addgal.html")
+
+@app.route('/addemp')
+def addemp():
+  return render_template("addemp.html")
+
+@app.route('/addcust')
+def addcust():
+  return render_template("addcust.html")
+
+# # Example of adding new data to the database
+# @app.route('/add', methods=['POST'])
+# def add():
+#   name = request.form['name']
+#   # g.conn.execute("INSERT INTO test(name) VALUES (?);", name)
+#   s = "insert into test(name) values ('{}')".format(name)
+#   g.conn.execute(s)
+#   return redirect('/')
+
+
+# add new entry to database
+
+# add art piece
+@app.route('/add_ap', methods=['POST'])
+def add_ap():
+  name = request.form['name']
+  year = request.form['year']
+  genre = request.form['genre']
+  fm = request.form['format']
+  artist = request.form['artist']
+  pid = g.conn.execute('select max(pid) from artpieces').first()
+  pid = int(pid['max'])+1
+  s = "insert into artpieces(pid, year, name, genre, format, artist) \
+      values ('{}', '{}', '{}', '{}','{}','{}')" \
+      .format(pid, year, name, genre, fm, artist)
+  try:  
+    g.conn.execute(s)
+  except:
+    return render_template("error.html")
+  g.conn.execute("delete from artpieces where pid = '{}'".format(pid))
+  return redirect('/')
+
+# add exhibition
+@app.route('/add_exhib', methods=['POST'])
+def add_exhib():
+  # write code here
+  #
+  #
+  return redirect('/')
+
+# add gallery
+@app.route('/add_gal', methods=['POST'])
+def add_gal():
+  # write code here
+  #
+  #
+  return redirect('/')
+
+# add employee
+@app.route('/add_emp', methods=['POST'])
+def add_emp():
+  # write code here
+  #
+  #
+  return redirect('/')
+
+# add customer
+@app.route('/add_cust', methods=['POST'])
+def add_cust():
+  # write code here
+  #
+  #
   return redirect('/')
 
 
-@app.route('/login')
-def login():
-    abort(401)
-    this_is_never_executed()
-
-
+# main
 if __name__ == "__main__":
   import click
 

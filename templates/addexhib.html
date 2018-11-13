@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Add Exhibition</title>
+        <link rel="stylesheet" href="/static/index.css">
+        <style>
+                body{ 
+                  font-size: 15pt;
+                  font-family: arial;
+                }
+        </style>
+    </head>  
+
+    <body>
+     <div>
+            <form method="POST" action="/add_exhib">
+                    Name:<br>
+                    <input class = "input-field" type="text" name="name"><br>
+                    Begin Date:<br>
+                    <input class = "input-field" type="text" name="begin-date"><br>
+                    End Date:<br>
+                    <input class = "input-field" type="text" name="end-date"><br>
+                    <input class = "submit-btn" type="submit" value="Submit"> 
+                  </form>
+     </div>   
+    </body>
+</html>

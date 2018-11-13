@@ -1,4 +1,4 @@
-  .topnav .search-container{
+.topnav .search-container{
     overflow: hidden;
     background-color: #f1f1f1;
     border: 1px solid #ccc;
@@ -19,7 +19,7 @@
   }
   
   .topnav .search-container button {
-    padding: 6px;
+    padding: 6px 15px;
     margin-top: 8px;
     margin-right: 16px;
     background: #ddd;
@@ -30,6 +30,13 @@
   
   .topnav .search-container button:hover {
     background: #ccc;
+  }
+
+  #search-result {
+    display: none;
+    border: 1px solid #ccc;
+    margin: 10px 0px;
+    padding: 10px;
   }
 
 .tab {
@@ -69,4 +76,29 @@
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
+}
+
+.submit-btn {
+  width: 200px;
+  height: 50px;
+  margin: 10px 0px;
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* Dropdown button on hover & focus */
+.submit-btn:hover, .submit-btn:focus {
+  background-color: #2980B9;
+}
+
+.input-field {
+  width: 400px;
+  margin: 10px 0px;
+  padding: 10px;
+  font-size: 14px;
 }

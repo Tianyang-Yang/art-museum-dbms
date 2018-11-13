@@ -1,3 +1,12 @@
+function displayResult() {
+    var x = document.getElementById("search-result");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "block";
+    }
+}
+
 function openCity(evt, cityName) {
     // Declare all variables
     var i, tabcontent, tablinks;
