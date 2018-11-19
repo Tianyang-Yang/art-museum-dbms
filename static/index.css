@@ -6,38 +6,63 @@
     margin-bottom: 10px;
   }
 
-  /* .topnav .search-container {
-    float: right;
-  } */
-  
-  .topnav input[type=text] {
-    padding: 6px;
-    margin: 8px 15px;
-    font-size: 17px;
-    border: none;
-    width: 90%;
-  }
-  
-  .topnav .search-container button {
-    padding: 6px 15px;
-    margin-top: 8px;
-    margin-right: 16px;
-    background: #ddd;
-    font-size: 17px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .topnav .search-container button:hover {
-    background: #ccc;
-  }
+/* .topnav .search-container {
+  float: right;
+} */
 
-  #search-result {
-    display: none;
-    border: 1px solid #ccc;
-    margin: 10px 0px;
-    padding: 10px;
-  }
+.topnav input[type=text] {
+  padding: 6px;
+  margin: 8px 15px;
+  font-size: 17px;
+  border: none;
+  width: 90%;
+}
+  
+.topnav .search-container button {
+  padding: 6px 15px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.topnav .search-container button:hover {
+  background: #ccc;
+}
+
+#search-result {
+  display: none;
+  border: 1px solid #ccc;
+  margin: 10px 0px;
+  padding: 10px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 10px 0px;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
 
 .tab {
     overflow: hidden;
@@ -101,4 +126,67 @@
   margin: 10px 0px;
   padding: 10px;
   font-size: 14px;
+}
+
+
+#left-sec {
+  background-color: lightgrey;
+}
+
+#right-sec {
+  text-indent: 20px;
+}
+
+.custom-select {
+  position: relative;
+  font-family: Arial;
+  height: 40px;
+  margin: 10px 0px;
+  font-size: 16px;
+}
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+.custom-select select-selected {
+  background-color: DodgerBlue;
+}
+/*style the arrow inside the select element:*/
+.custom-select select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+/*point the arrow upwards when the select box is open (active):*/
+.custom-select select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+/*style the items (options), including the selected item:*/
+.custom-select select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+/*style items (options):*/
+.custom-select select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+/*hide the items when the select box is closed:*/
+.custom-select select-hide {
+  display: none;
+}
+.custom-select select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
 }

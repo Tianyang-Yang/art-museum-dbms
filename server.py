@@ -203,13 +203,62 @@ def addexhib():
 def addgal():
   return render_template("addgal.html")
 
+@app.route('/adddept')
+def adddept():
+  return render_template("adddept.html")
+
 @app.route('/addemp')
 def addemp():
   return render_template("addemp.html")
 
+@app.route('/updateemp')
+def updateemp():
+  employees = g.conn.execute("select name from employees;")
+  empnames = []
+  for result in employees:
+    empnames.append(result['name'])
+  return render_template("updateemp.html", data = empnames)
+
 @app.route('/addcust')
 def addcust():
   return render_template("addcust.html")
+
+@app.route('/personnel')
+def personnel():
+  managers = g.conn.execute("select departments.name, employees.name from departments, manages, employees where departments.did=manages.did and manages.ssn=employees.ssn;")
+  mngnames = []
+  for result in managers:
+    mngnames.append(result['name'])
+  managers.close()
+
+  employees = g.conn.execute("select departments.name, employees.name from departments, works_in, employees where departments.did=works_in.did and works_in.ssn=employees.ssn;")
+  empnames = []
+  for result in employees:
+    empnames.append(result['name'])
+  employees.close()
+
+  departments = g.conn.execute("select name from departments")
+  deptnames = []
+  for result in departments:
+    deptnames.append(result['name'])
+  departments.close()
+
+  context = dict(dept_data = deptnames, mng_data = mngnames, emp_data = empnames, data = zip(deptnames, mngnames, empnames))
+
+  return render_template("personnel.html", **context)
+
+@app.route('/customer')
+def customer():
+
+  customers = g.conn.execute("select name, visit from customers")
+  cust = []
+  for result in customers:
+    cust.append(result)
+  customers.close()
+
+  context = dict(cust_data = cust)
+
+  return render_template("customer.html", **context)
 
 # # Example of adding new data to the database
 # @app.route('/add', methods=['POST'])
@@ -254,6 +303,14 @@ def add_exhib():
 # add gallery
 @app.route('/add_gal', methods=['POST'])
 def add_gal():
+  # write code here
+  #
+  #
+  return redirect('/')
+
+# add department
+@app.route('/add_emp', methods=['POST'])
+def add_dept():
   # write code here
   #
   #

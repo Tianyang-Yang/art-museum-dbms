@@ -1,0 +1,94 @@
+<html>
+  <head>
+    <title>Art Museum DBMS</title>
+
+    <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="/static/dropdown.css">
+    <script src="/static/index.js"></script>
+    <script src="/static/dropdown.js"></script>
+    <style>
+      body{ 
+        font-size: 15pt;
+        font-family: arial;
+      }
+    </style>
+  </head>
+
+
+<body>
+  <h1> Art Museum DBMS</h1>
+  <div id="main-wrapper">
+    <div class="topnav">
+        <div class="search-container">
+            <input type="text" placeholder="Enter your search here..." name="search">
+            <button type="submit" onclick="displayResult()">Search</button>
+        </div>
+        <div id="search-result">
+            This is the search result.
+        </div>
+      </div>
+    
+      <div id="nav">
+        <ul>
+          <li><a href="index">Inventory</a></li>
+          <li><a href="personnel">Personnel</a></li>
+          <li><a href="customer">Customer</a></li>
+        </ul>
+      </div>
+
+    <div class="dropdown">
+        <a href="adddept"><button class="dropbtn">Add Department</button></a>
+    </div>
+    <div class="dropdown">
+      <a href="addemp"><button class="dropbtn">Add Employee</button></a>
+  </div>
+  <div class="dropdown">
+    <a href="updateemp"><button class="dropbtn">Update Employee Info</button></a>
+</div>
+
+
+    <div class="tab">
+      <button class="tablinks" onclick="openCity(event, 'departments')">Departments</button>
+      <button class="tablinks" onclick="openCity(event, 'employees')">Employees</button>
+    </div>
+  
+    <!-- Tab content -->
+    <div id="departments" class="tabcontent">
+      <h3>Departments</h3>
+      <!-- {% for a in dept_data %}
+      <div>{{a}}</div>
+      {% endfor %} -->
+      {% for a,b,c in data %}
+        <div id="left-sec">{{a}}</div>
+        <div id="right-sec">  Manager: {{b}}</div>
+        <div id="right-sec">  Staff: {{c}}</div>
+      {% endfor %}
+
+  </div>
+
+    <div id="employees" class="tabcontent">
+        <h3>Employees</h3>
+        {% for n in emp_data %}
+        <div>{{n}}</div>
+        {% endfor %}
+    </div>
+    
+    
+
+  </div>
+  <!-- main wrapper-->
+
+
+  
+
+<!-- <p><a href="another">Go to the other page</a></p>
+<div>{{data}}</div>
+
+<form method="POST" action="/add">
+<p>Name of new computer scientist: <input type="text" name="name"> <input type="submit" value="Add"></p>
+</form> -->
+
+</body>
+
+
+</html>

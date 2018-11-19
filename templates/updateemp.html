@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>Update Employee Info</title>
+        <script src="jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="/static/index.css">
+        <style>
+                body{ 
+                  font-size: 15pt;
+                  font-family: arial;
+                }
+        </style>
+    </head>  
+
+    <body>
+     <div>
+         
+            <form method="POST" action="/update_emp">
+            
+                
+                    Name:<br>
+                    <select id="custom-select" class="custom-select" style="width:200px;">
+                        {% for n in data %}
+                            <option>{{n}}</option>
+                            <!-- <option value="1">Audi</option>
+                            <option value="2">BMW</option>
+                            <option value="3">Citroen</option>
+                            <option value="4">Ford</option>
+                            <option value="5">Honda</option>
+                            <option value="6">Jaguar</option>
+                            <option value="7">Land Rover</option>
+                            <option value="8">Mercedes</option>
+                            <option value="9">Mini</option>
+                            <option value="10">Nissan</option>
+                            <option value="11">Toyota</option>
+                            <option value="12">Volvo</option> -->
+                            {% endfor %}
+                            </select><br>
+                    <!-- <input class = "input-field" type="text" name="name"><br> -->
+                    SSN:<br>
+                    <input class = "input-field" type="number" name="ssn"><br>
+                    Age:<br>
+                    <input class = "input-field" type="number" name="age"><br>
+                    Department:<br>
+                    <input class = "input-field" type="text" name="dept"><br>
+
+                    <input class = "submit-btn" type="submit" value="Submit">   
+                  </form>
+     </div>   
+    </body>
+</html>
