@@ -120,4 +120,8 @@ function closeAllSelect(elmnt) {
 then close all select boxes:*/
 document.addEventListener("click", closeAllSelect);
 
+function goBack() {
+    window.history.back();
+}
+
 

@@ -94,7 +94,7 @@ def teardown_request(exception):
 # see for routing: http://flask.pocoo.org/docs/0.10/quickstart/#routing
 # see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
 #
-@app.route('/')
+@app.route('/index')
 def index():
   """
   request is a special object that Flask provides to access web request information:
@@ -209,7 +209,11 @@ def adddept():
 
 @app.route('/addemp')
 def addemp():
-  return render_template("addemp.html")
+  departments = g.conn.execute("select name from departments;")
+  deptnames = []
+  for result in departments:
+    deptnames.append(result['name'])
+  return render_template("addemp.html", data = deptnames)
 
 @app.route('/updateemp')
 def updateemp():
@@ -231,11 +235,17 @@ def personnel():
     mngnames.append(result['name'])
   managers.close()
 
-  employees = g.conn.execute("select departments.name, employees.name from departments, works_in, employees where departments.did=works_in.did and works_in.ssn=employees.ssn;")
+  employees = g.conn.execute("select departments.name, employees.name, employees from departments, works_in, employees where departments.did=works_in.did and works_in.ssn=employees.ssn;")
   empnames = []
   for result in employees:
     empnames.append(result['name'])
   employees.close()
+
+  emp = g.conn.execute("select name, ssn, age from employees;")
+  empdata = []
+  for result in emp:
+    empdata.append(result)
+  emp.close()
 
   departments = g.conn.execute("select name from departments")
   deptnames = []
@@ -243,7 +253,7 @@ def personnel():
     deptnames.append(result['name'])
   departments.close()
 
-  context = dict(dept_data = deptnames, mng_data = mngnames, emp_data = empnames, data = zip(deptnames, mngnames, empnames))
+  context = dict(dept_data = deptnames, mng_data = mngnames, emp_data = empdata, data = zip(deptnames, mngnames, empnames))
 
   return render_template("personnel.html", **context)
 
@@ -309,7 +319,7 @@ def add_gal():
   return redirect('/')
 
 # add department
-@app.route('/add_emp', methods=['POST'])
+@app.route('/add_dept', methods=['POST'])
 def add_dept():
   # write code here
   #
@@ -319,9 +329,57 @@ def add_dept():
 # add employee
 @app.route('/add_emp', methods=['POST'])
 def add_emp():
-  # write code here
-  #
-  #
+  name = request.form['name']
+  ssn = request.form['ssn']
+  age = request.form['age']
+  dept = request.form.get('dept')
+  try:
+    s1 = "insert into employees(ssn, name, age) \
+      values ('{}', '{}', '{}');" \
+      .format(ssn, name, age)
+    g.conn.execute(s1)
+    s2 = "select did from departments where name = '{}';".format(dept)
+    did = g.conn.execute(s2).first()['did']
+    s3 = "insert into works_in(did, ssn) values ('{}', '{}');".format(did, ssn)
+    g.conn.execute(s3)
+  except:
+    return render_template("error.html")
+  return redirect('/')
+
+# update employee info
+@app.route('/update_emp', methods=['POST'])
+def update_emp():
+  name = request.form.get('name')
+  ssn = request.form['ssn']
+  age = request.form['age']
+  dept = request.form['dept']
+  pos = request.form['position']
+  try:
+    s1 = "insert into employees(ssn, name, age) \
+      values ('{}', '{}', '{}');" \
+      .format(ssn, name, age)
+    s2 = "select did from departments where name = '{}';".format(dept)
+    did = int(g.conn.execute(s2).first()['did'])
+    s_1 = ""
+    if pos == "Manager":
+      s = "select exists(select true from manages where ssn = '{}');".format(ssn)
+      exists = g.conn.execute(s).first()['exists']
+      if exists == "t":
+        s_1 = "update manages set did = '{}';".format(did)
+      else:
+        return render_template("error.html") 
+    else:
+      s = "select exists(select true from works_in where ssn = '{}');".format(ssn)
+      exists = g.conn.execute(s).first()['exists']
+      if exists == "t":
+        s_1 = "update manages set did = '{}';".format(did)
+      else:
+        s_1 = "insert into works_in(did, ssn) values ('{}', '{}');".format(did, ssn) 
+      g.conn.execute(s1)
+      g.conn.execute(s_1)
+  except:
+    return render_template("error.html")
+  # g.conn.execute("delete from artpieces where pid = '{}'".format(pid))
   return redirect('/')
 
 # add customer

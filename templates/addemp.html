@@ -20,7 +20,13 @@
                     Age:<br>
                     <input class = "input-field" type="number" name="age"><br>
                     Department:<br>
-                    <input class = "input-field" type="text" name="dept"><br>
+                    <select name="dept" class="custom-select" style="width:200px;">
+                        <option>Select Department</option>
+                        {% for n in data %}
+                            <option>{{n}}</option>
+                        {% endfor %}
+                    </select><br>
+                    <!-- <input class = "input-field" type="text" name="dept"><br> -->
 
                     <input class = "submit-btn" type="submit" value="Submit">
                     
