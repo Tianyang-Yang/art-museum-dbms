@@ -1,0 +1,21 @@
+#left-sec {
+    background-color: lightgrey;
+}
+  
+#right-sec {
+text-indent: 20px;
+}
+
+table {
+    width: 60%;
+}
+
+th {
+    background-color: lightgrey;
+}
+
+th, td {
+    padding: 15px 0px;
+    text-align: center;
+    border: 1px solid lightgrey;
+}

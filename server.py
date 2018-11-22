@@ -242,9 +242,13 @@ def personnel():
   employees.close()
 
   emp = g.conn.execute("select name, ssn, age from employees;")
-  empdata = []
+  empn = []
+  empssn = []
+  empage = []
   for result in emp:
-    empdata.append(result)
+    empn.append(result['name'])
+    empssn.append(result['ssn'])
+    empage.append(result['age'])
   emp.close()
 
   departments = g.conn.execute("select name from departments")
@@ -253,7 +257,8 @@ def personnel():
     deptnames.append(result['name'])
   departments.close()
 
-  context = dict(dept_data = deptnames, mng_data = mngnames, emp_data = empdata, data = zip(deptnames, mngnames, empnames))
+  context = dict(emp_info = zip(empn, empssn, empage), dept_data = deptnames, mng_data = mngnames, \
+                  data = zip(deptnames, mngnames, empnames))
 
   return render_template("personnel.html", **context)
 
@@ -321,10 +326,16 @@ def add_gal():
 # add department
 @app.route('/add_dept', methods=['POST'])
 def add_dept():
-  # write code here
-  #
-  #
-  return redirect('/')
+  name = request.form['name']
+  did = g.conn.execute('select max(did) from departments').first()
+  did = int(did['max'])+1
+  s = "insert into departments(did, name) \
+        values ('{}', '{}');".format(did, name)
+  try:
+    g.conn.execute(s)
+  except:
+    return render_template("error.html")
+  return redirect('/personnel')
 
 # add employee
 @app.route('/add_emp', methods=['POST'])
@@ -344,7 +355,7 @@ def add_emp():
     g.conn.execute(s3)
   except:
     return render_template("error.html")
-  return redirect('/')
+  return redirect('/personnel')
 
 # update employee info
 @app.route('/update_emp', methods=['POST'])
@@ -380,7 +391,7 @@ def update_emp():
   except:
     return render_template("error.html")
   # g.conn.execute("delete from artpieces where pid = '{}'".format(pid))
-  return redirect('/')
+  return redirect('/personnel')
 
 # add customer
 @app.route('/add_cust', methods=['POST'])

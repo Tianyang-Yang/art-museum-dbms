@@ -128,15 +128,6 @@ li a:hover {
   font-size: 14px;
 }
 
-
-#left-sec {
-  background-color: lightgrey;
-}
-
-#right-sec {
-  text-indent: 20px;
-}
-
 .custom-select {
   position: relative;
   font-family: Arial;

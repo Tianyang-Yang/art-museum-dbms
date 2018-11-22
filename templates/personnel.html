@@ -3,6 +3,7 @@
     <title>Art Museum DBMS</title>
 
     <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="/static/personnel.css">
     <link rel="stylesheet" href="/static/dropdown.css">
     <script src="/static/index.js"></script>
     <script src="/static/dropdown.js"></script>
@@ -68,9 +69,20 @@
 
     <div id="employees" class="tabcontent">
         <h3>Employees</h3>
-        {% for n in emp_data %}
-        <div>{{n}}</div>
-        {% endfor %}
+        <table class="tb">
+            <tr>
+                <th>Name</th>
+                <th>SSN</th> 
+                <th>Age</th>
+            </tr>
+            {% for a,b,c in emp_info %}
+            <tr> 
+              <td>{{a}}</td>
+              <td>{{b}}</td> 
+              <td>{{c}}</td>
+            </tr>
+            {% endfor %}  
+          </table>
     </div>
     
     
