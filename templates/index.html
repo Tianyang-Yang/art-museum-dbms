@@ -1,31 +1,31 @@
 <html>
-  <head>
-    <title>Art Museum DBMS</title>
 
-    <link rel="stylesheet" href="/static/index.css">
-    <link rel="stylesheet" href="/static/dropdown.css">
-    <script src="/static/index.js"></script>
-    <script src="/static/dropdown.js"></script>
-    <style>
-      body{ 
-        font-size: 15pt;
-        font-family: arial;
-      }
-    </style>
-  </head>
+<head>
+  <title>Art Museum DBMS</title>
 
+  <link rel="stylesheet" href="/static/index.css">
+  <link rel="stylesheet" href="/static/dropdown.css">
+  <script src="/static/index.js"></script>
+  <script src="/static/dropdown.js"></script>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+</head>
 
 <body>
   <h1> Art Museum DBMS</h1>
   <div id="main-wrapper">
     <div class="topnav">
-        <div class="search-container">
-            <input type="text" placeholder="Enter your search here..." name="search">
-            <button type="submit" onclick="displayResult()">Search</button>
-        </div>
-        <div id="search-result">
-            This is the search result.
-        </div>
+      <div class="search-container">
+        <input type="text" placeholder="Enter your search here..." name="search">
+        <button type="submit" onclick="displayResult()">Search</button>
+      </div>
+      <div id="search-result">
+        This is the search result.
+      </div>
     </div>
 
     <div id="nav">
@@ -36,81 +36,49 @@
       </ul>
     </div>
 
-
-
     <div class="dropdown">
-        <button onclick="myFunction()" class="dropbtn">Add Entry</button>
-        <div id="myDropdown" class="dropdown-content">
-          <a href="addap">Art Piece</a>
-          <a href="addexhib">Exhibition</a>
-          <a href="addgal">Gallery</a>
-          <a href="addemp">Employees</a>
-          <a href="addcust">Customers</a>
-        </div>
+      <a href="addap"><button class="dropbtn">Add Art Piece</button></a>
+    </div>
+    <div class="dropdown">
+      <a href="addexhib"><button class="dropbtn">Add Exhibition</button></a>
+    </div>
+    <div class="dropdown">
+      <a href="addgal"><button class="dropbtn">Add Gallery</button></a>
     </div>
 
     <div class="tab">
       <button class="tablinks" onclick="openCity(event, 'artpieces')">Art Pieces</button>
       <button class="tablinks" onclick="openCity(event, 'exhibitions')">Exhibitions</button>
       <button class="tablinks" onclick="openCity(event, 'galleries')">Galleries</button>
-      <button class="tablinks" onclick="openCity(event, 'employees')">Employees</button>
-      <button class="tablinks" onclick="openCity(event, 'customers')">Customers</button>
     </div>
-  
+
     <!-- Tab content -->
     <div id="artpieces" class="tabcontent">
       <h3>Art Pieces</h3>
       <div>
-          {% for n in ap_data %}
-          <div>{{n}}</div>
-          {% endfor %}
-      </div>  
+        {% for n in ap_data %}
+        <div>{{n}}</div>
+        {% endfor %}
+      </div>
     </div>
-    
+
     <div id="exhibitions" class="tabcontent">
       <h3>Exhibitions</h3>
       <div>
-          {% for n in exhib_data %}
-          <div>{{n}}</div>
-          {% endfor %}
+        {% for n in exhib_data %}
+        <div>{{n}}</div>
+        {% endfor %}
       </div>
     </div>
-    
+
     <div id="galleries" class="tabcontent">
       <h3>Galleries</h3>
       {% for n in gal_data %}
       <div>Gallery {{n}}</div>
       {% endfor %}
     </div>
-
-    <div id="employees" class="tabcontent">
-        <h3>Employees</h3>
-        {% for n in emp_data %}
-        <div>{{n}}</div>
-        {% endfor %}
-    </div>
-    
-    <div id="customers" class="tabcontent">
-        <h3>Customers</h3>
-        {% for n in cust_data %}
-        <div>{{n}}</div>
-        {% endfor %}
-    </div>
-
   </div>
   <!-- main wrapper-->
-
-
-  
-
-<!-- <p><a href="another">Go to the other page</a></p>
-<div>{{data}}</div>
-
-<form method="POST" action="/add">
-<p>Name of new computer scientist: <input type="text" name="name"> <input type="submit" value="Add"></p>
-</form> -->
-
 </body>
-
 
 </html>

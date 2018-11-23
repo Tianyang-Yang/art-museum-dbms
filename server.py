@@ -109,7 +109,6 @@ def index():
   # DEBUG: this is debugging code to see what request looks like
   print(request.args)
 
-
   # get entities data from databases 
   artpieces = g.conn.execute("select name from artpieces")
   apnames = []
@@ -141,40 +140,8 @@ def index():
     custnames.append(result['name'])
   customers.close()
 
-  #
-  # Flask uses Jinja templates, which is an extension to HTML where you can
-  # pass data to a template and dynamically generate HTML based on the data
-  # (you can think of it as simple PHP)
-  # documentation: https://realpython.com/blog/python/primer-on-jinja-templating/
-  #
-  # You can see an example template in templates/index.html
-  #
-  # context are the variables that are passed to the template.
-  # for example, "data" key in the context variable defined below will be 
-  # accessible as a variable in index.html:
-  #
-  #     # will print: [u'grace hopper', u'alan turing', u'ada lovelace']
-  #     <div>{{data}}</div>
-  #     
-  #     # creates a <div> tag for each element in data
-  #     # will print: 
-  #     #
-  #     #   <div>grace hopper</div>
-  #     #   <div>alan turing</div>
-  #     #   <div>ada lovelace</div>
-  #     #
-  #     {% for n in data %}
-  #     <div>{{n}}</div>
-  #     {% endfor %}
-  #
   context = dict(ap_data = apnames, exhib_data = exhibnames, gal_data = galnames, \
                   emp_data = empnames, cust_data = custnames)
-
-
-  #
-  # render_template looks in the templates/ folder for files.
-  # for example, the below file reads template/index.html
-  #
   return render_template("index.html", **context)
 
 
@@ -193,11 +160,27 @@ def index():
 # urls decorators
 @app.route('/addap')
 def addap():
-  return render_template("addap.html")
+  artists = g.conn.execute("select name from artists;")
+  artistnames = []
+  for result in artists:
+    artistnames.append(result['name'])
+  return render_template("addap.html", artistdata = artistnames)
 
 @app.route('/addexhib')
 def addexhib():
-  return render_template("addexhib.html")
+  galleries = g.conn.execute("select name from galleries;")
+  galnames = []
+  for result in galleries:
+    galnames.append(result['name'])
+  
+  artpieces = g.conn.execute("select name from artpieces left join belongs_to using(pid) \
+                              where eid is null;")
+  apnames = []
+  for result in artpieces:
+    apnames.append(result['name'])
+  
+  context = dict(galdata = galnames, apdata = apnames)
+  return render_template("addexhib.html", **context)
 
 @app.route('/addgal')
 def addgal():
@@ -307,7 +290,7 @@ def customer():
 #   return redirect('/')
 
 
-# add new entry to database
+# update database
 
 # add art piece
 @app.route('/add_ap', methods=['POST'])
@@ -322,20 +305,65 @@ def add_ap():
   s = "insert into artpieces(pid, year, name, genre, format, artist) \
       values ('{}', '{}', '{}', '{}','{}','{}')" \
       .format(pid, year, name, genre, fm, artist)
+  if artist == 'Other':
+    artist_name = request.form['artist-name']
+    birth = request.form['birth']
+    death = request.form['death']
+    country = request.form['country']
+    aid = g.conn.execute('select max(aid) from artists').first()
+    aid = int(aid['max'])+1
+    s1 = "insert into artists(aid, name, birth, death, country) \
+         values ('{}', '{}', '{}', '{}','{}');" \
+         .format(aid, artist_name, birth, death, country)
+    try:
+      g.conn.execute(s1)
+    except:
+      return render_template("error.html")
+  else:
+    aid = g.conn.execute("select aid from artists where name = '{}';".format(artist)).first()
+    aid = aid['aid']
   try:  
     g.conn.execute(s)
+    g.conn.execute("insert into creates(pid, aid) values ('{}', '{}');".format(pid, aid))
   except:
     return render_template("error.html")
-  g.conn.execute("delete from artpieces where pid = '{}'".format(pid))
-  return redirect('/')
+  return redirect('/index')
 
 # add exhibition
 @app.route('/add_exhib', methods=['POST'])
 def add_exhib():
-  # write code here
-  #
-  #
-  return redirect('/')
+  name = request.form['name']
+  begin = request.form['begin-date']
+  until = request.form['end-date']
+  gal = request.form['gal']
+  ap = request.form.getlist('ap')
+  eid = g.conn.execute('select max(eid) from exhibitions').first()
+  eid = int(eid['max'])+1
+
+  pids = []
+  for a in ap:
+      try:
+        pid = g.conn.execute("select pid from artpieces where name = '{}';".format(a)).first()
+        pid = int(pid['pid'])
+      except: 
+        return render_template("error.html")    
+      pids.append(pid)
+
+  s1 = "insert into exhibitions(eid, name, begin, until) \
+        values ('{}', '{}', '{}', '{}');".format(eid, name, begin, until)  
+  s2 = "insert into houses(name, eid) values ('{}', '{}');".format(gal, eid)
+
+  try:
+    g.conn.execute(s1)
+    g.conn.execute(s2)
+    for pid in pids:
+      s3 = "insert into belongs_to(pid, eid) values ('{}', '{}');".format(pid, eid)
+      s4 = "insert into locates(pid, name) values ('{}', '{}');".format(pid, gal)
+      g.conn.execute(s3)
+      g.conn.execute(s4)
+  except:
+    return render_template("error.html")    
+  return redirect('/index')
 
 # add gallery
 @app.route('/add_gal', methods=['POST'])
@@ -343,7 +371,7 @@ def add_gal():
   # write code here
   #
   #
-  return redirect('/')
+  return redirect('/index')
 
 # add department
 @app.route('/add_dept', methods=['POST'])

@@ -1,31 +1,55 @@
 <html>
-    <head>
-        <title>Add Art Piece</title>
-        <link rel="stylesheet" href="/static/index.css">
-        <style>
-                body{ 
-                  font-size: 15pt;
-                  font-family: arial;
-                }
-        </style>
-    </head>  
 
-    <body>
-     <div>
-            <form method="POST" action="/add_ap">
-                    Name:<br>
-                    <input class = "input-field" type="text" name="name"><br>
-                    Year:<br>
-                    <input class = "input-field" type="text" name="year"><br>
-                    Genre:<br>
-                    <input class = "input-field" type="text" name="genre"><br>
-                    Format:<br>
-                    <input class = "input-field" type="text" name="format"><br>
-                    Artist:<br>
-                    <input class = "input-field" type="text" name="artist"><br>
-                    <input class = "submit-btn" type="submit" value="Submit">
-                    
-                  </form>
-     </div>   
-    </body>
+<head>
+  <title>Add Art Piece</title>
+  <link rel="stylesheet" href="/static/index.css">
+  <link rel="stylesheet" href="/static/dropdown.css">
+  <script src="/static/index.js"></script>
+  <script src="/static/dropdown.js"></script>
+  <style>
+    body{ 
+            font-size: 15pt;
+            font-family: arial;
+        }
+    </style>
+</head>
+
+<body>
+  <div>
+    <form method="POST" action="/add_ap" novalidate>
+      Name:<br>
+      <input class="input-field" type="text" name="name" required><br>
+      Year:<br>
+      <input class="input-field" type="year" name="year" required><br>
+      Genre:<br>
+      <input class="input-field" type="text" name="genre" required><br>
+      Format:<br>
+      <input class="input-field" type="text" name="format" required><br>
+      Artist:<br>
+      <select name="artist" class="custom-select" onchange="enterArtist(this)" style="width:200px;">
+        <option>Select Artist</option>
+        {% for n in artistdata %}
+        <option>{{n}}</option>
+        {% endfor %}
+        <option id="other-artist">Other</option>
+      </select><br>
+      <div id="artist-info">
+        --Enter Artist Information:--<br>
+        Name:<br>
+        <input class="input-field" type="text" name="artist-name" required><br>
+        Birth:<br>
+        <input class="input-field" type="year" name="birth" required><br>
+        Death:<br>
+        <input class="input-field" type="year" name="death" required><br>
+        Country:<br>
+        <input class="input-field" type="text" name="country" required><br>
+      </div>
+      <input class="submit-btn" type="submit" value="Submit">
+    </form>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="goBack()">Return</button>
+    </div>
+  </div>
+</body>
+
 </html>

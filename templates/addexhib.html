@@ -1,26 +1,50 @@
 <html>
-    <head>
-        <title>Add Exhibition</title>
-        <link rel="stylesheet" href="/static/index.css">
-        <style>
-                body{ 
+
+<head>
+  <title>Add Exhibition</title>
+  <link rel="stylesheet" href="/static/index.css">
+  <link rel="stylesheet" href="/static/dropdown.css">
+  <script src="/static/index.js"></script>
+  <script src="/static/dropdown.js"></script>
+  <style>
+    body{ 
                   font-size: 15pt;
                   font-family: arial;
                 }
         </style>
-    </head>  
+</head>
 
-    <body>
-     <div>
-            <form method="POST" action="/add_exhib">
-                    Name:<br>
-                    <input class = "input-field" type="text" name="name"><br>
-                    Begin Date:<br>
-                    <input class = "input-field" type="text" name="begin-date"><br>
-                    End Date:<br>
-                    <input class = "input-field" type="text" name="end-date"><br>
-                    <input class = "submit-btn" type="submit" value="Submit"> 
-                  </form>
-     </div>   
-    </body>
+<body>
+  <div>
+    <form method="POST" action="/add_exhib">
+      Name:<br>
+      <input class="input-field" type="text" name="name" required><br>
+      Begin Date:<br>
+      <input class="input-field" type="date" name="begin-date"><br>
+      End Date:<br>
+      <input class="input-field" type="date" name="end-date"><br>
+      Gallery:<br>
+      <select name="gal" class="custom-select" style="width:200px;">
+        <option>Select Gallery</option>
+        {% for n in galdata %}
+        <option>{{n}}</option>
+        {% endfor %}
+      </select><br>
+      Art Pieces:<br>
+      <div class="checkbox-sec">
+        {% for n in apdata %}
+        <div class="checkbox-row">
+          <input class="checkbox-row" type="checkbox" name="ap" value="{{n}}">{{n}}<br>
+          <label class="sup-label" for="{{n}}">{{n}}</label>
+        </div>
+        {% endfor %}
+      </div>
+      <input class="submit-btn" type="submit" value="Submit">
+    </form>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="goBack()">Return</button>
+    </div>
+  </div>
+</body>
+
 </html>

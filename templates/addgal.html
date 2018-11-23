@@ -1,26 +1,33 @@
 <html>
-    <head>
-        <title>Add Art Piece</title>
-        <link rel="stylesheet" href="/static/index.css">
-        <style>
-                body{ 
+
+<head>
+  <title>Add Art Piece</title>
+  <link rel="stylesheet" href="/static/index.css">
+  <link rel="stylesheet" href="/static/dropdown.css">
+  <script src="/static/index.js"></script>
+  <script src="/static/dropdown.js"></script>
+  <style>
+    body{ 
                   font-size: 15pt;
                   font-family: arial;
                 }
         </style>
-    </head>  
+</head>
 
-    <body>
-     <div>
-            <form method="POST" action="/add_gal">
-                    Name:<br>
-                    <input class = "input-field" type="text" name="name"><br>
-                    Location:<br>
-                    <input class = "input-field" type="text" name="location"><br>
-                    
-                    <input class = "submit-btn" type="submit" value="Submit">
-                    
-                  </form>
-     </div>   
-    </body>
+<body>
+  <div>
+    <form method="POST" action="/add_gal">
+      Name:<br>
+      <input class="input-field" type="text" name="name"><br>
+      Location:<br>
+      <input class="input-field" type="text" name="location"><br>
+
+      <input class="submit-btn" type="submit" value="Submit">
+    </form>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="goBack()">Return</button>
+    </div>
+  </div>
+</body>
+
 </html>

@@ -181,3 +181,21 @@ li a:hover {
 .custom-select select-items div:hover, .same-as-selected {
   background-color: rgba(0, 0, 0, 0.1);
 }
+
+.checkbox-sec {
+  padding: 10px 0px;
+  border: 1px solid lightgrey;
+  width: 60%;
+}
+.checkbox-row {
+  text-indent: 5px;
+  padding: 0px 10px;
+}
+
+.sup-label {
+  display: none;
+}
+
+#artist-info {
+  display: none;
+}

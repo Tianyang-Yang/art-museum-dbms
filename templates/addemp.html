@@ -1,42 +1,43 @@
 <html>
-    <head>
-        <title>Add Art Piece</title>
-        <link rel="stylesheet" href="/static/index.css">
-        <link rel="stylesheet" href="/static/dropdown.css">
-        <script src="/static/index.js"></script>
-        <script src="/static/dropdown.js"></script>
-        <style>
-                body{ 
-                  font-size: 15pt;
-                  font-family: arial;
-                }
-        </style>
-    </head>  
 
-    <body>
-     <div>
-            <form method="POST" action="/add_emp">
-                    Name:<br>
-                    <input class = "input-field" type="text" name="name"><br>
-                    SSN:<br>
-                    <input class = "input-field" type="number" name="ssn"><br>
-                    Age:<br>
-                    <input class = "input-field" type="number" name="age"><br>
-                    Department:<br>
-                    <select name="dept" class="custom-select" style="width:200px;">
-                        <option>Select Department</option>
-                        {% for n in data %}
-                            <option>{{n}}</option>
-                        {% endfor %}
-                    </select><br>
-                    <!-- <input class = "input-field" type="text" name="dept"><br> -->
+<head>
+  <title>Add Art Piece</title>
+  <link rel="stylesheet" href="/static/index.css">
+  <link rel="stylesheet" href="/static/dropdown.css">
+  <script src="/static/index.js"></script>
+  <script src="/static/dropdown.js"></script>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+</head>
 
-                    <input class = "submit-btn" type="submit" value="Submit">
-                    
-                </form>
-                <div class="dropdown">
-                        <button class="dropbtn" onclick="goBack()">Return</button>
-                </div>
-     </div>   
-    </body>
+<body>
+  <div>
+    <form method="POST" action="/add_emp">
+      Name:<br>
+      <input class="input-field" type="text" name="name"><br>
+      SSN:<br>
+      <input class="input-field" type="number" name="ssn"><br>
+      Age:<br>
+      <input class="input-field" type="number" name="age"><br>
+      Department:<br>
+      <select name="dept" class="custom-select" style="width:200px;">
+        <option>Select Department</option>
+        {% for n in data %}
+        <option>{{n}}</option>
+        {% endfor %}
+      </select><br>
+
+      <input class="submit-btn" type="submit" value="Submit">
+
+    </form>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="goBack()">Return</button>
+    </div>
+  </div>
+</body>
+
 </html>
