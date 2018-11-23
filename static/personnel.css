@@ -1,9 +1,18 @@
-#left-sec {
+#dept {
     background-color: lightgrey;
+    padding: 15px;
+    width: 60%;
+    border: 1px solid lightgrey;
 }
-  
-#right-sec {
-text-indent: 20px;
+
+#emp-wrapper {
+    border: 1px solid lightgrey;
+    width: 60%;
+    padding: 15px;
+}
+#emp-row {
+    text-indent: 20px;
+    padding: 5px 0px;
 }
 
 table {
@@ -18,4 +27,5 @@ th, td {
     padding: 15px 0px;
     text-align: center;
     border: 1px solid lightgrey;
+    font-size: 15pt;
 }

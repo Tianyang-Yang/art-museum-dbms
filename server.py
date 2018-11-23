@@ -229,16 +229,39 @@ def addcust():
 
 @app.route('/personnel')
 def personnel():
-  managers = g.conn.execute("select departments.name, employees.name from departments, manages, employees where departments.did=manages.did and manages.ssn=employees.ssn;")
-  mngnames = []
+  # managers = g.conn.execute("select departments.name, employees.name from departments, manages, employees where departments.did=manages.did and manages.ssn=employees.ssn;")
+  # mngnames = []
+  # for result in managers:
+  #   mngnames.append(result['name'])
+  # managers.close()
+  managers = g.conn.execute("select departments.name as dept, employees.name as mng \
+                              from departments, manages, employees \
+                              where departments.did=manages.did and manages.ssn=employees.ssn \
+                              union select name, null from departments;")
+  dept_mng = {}
   for result in managers:
-    mngnames.append(result['name'])
+    key = result['dept']
+    if key not in dept_mng:
+      if result['mng'] is not None:
+        dept_mng[key] = [result['mng']]
+    else:
+      if result['mng'] is not None:
+        dept_mng[key].append(result['mng'])
   managers.close()
 
-  employees = g.conn.execute("select departments.name, employees.name, employees from departments, works_in, employees where departments.did=works_in.did and works_in.ssn=employees.ssn;")
-  empnames = []
+  employees = g.conn.execute("select departments.name as dept, employees.name as emp \
+                              from departments, works_in, employees \
+                              where departments.did=works_in.did and works_in.ssn=employees.ssn \
+                              union select name, null from departments;")
+  dept_emp = {}
   for result in employees:
-    empnames.append(result['name'])
+    key = result['dept']
+    if key not in dept_emp:
+      if result['emp'] is not None:
+        dept_emp[key] = [result['emp']]
+    else:
+      if result['emp'] is not None:
+        dept_emp[key].append(result['emp'])
   employees.close()
 
   emp = g.conn.execute("select name, ssn, age from employees;")
@@ -257,8 +280,7 @@ def personnel():
     deptnames.append(result['name'])
   departments.close()
 
-  context = dict(emp_info = zip(empn, empssn, empage), dept_data = deptnames, mng_data = mngnames, \
-                  data = zip(deptnames, mngnames, empnames))
+  context = dict(dept = deptnames, mngbydept = dept_mng, empbydept = dept_emp, emp_info = zip(empn, empssn, empage))
 
   return render_template("personnel.html", **context)
 

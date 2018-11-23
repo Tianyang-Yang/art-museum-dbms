@@ -56,16 +56,24 @@
     <!-- Tab content -->
     <div id="departments" class="tabcontent">
       <h3>Departments</h3>
-      <!-- {% for a in dept_data %}
-      <div>{{a}}</div>
-      {% endfor %} -->
-      {% for a,b,c in data %}
-        <div id="left-sec">{{a}}</div>
-        <div id="right-sec">  Manager: {{b}}</div>
-        <div id="right-sec">  Staff: {{c}}</div>
+      {% for dept, emp in empbydept.items() %}
+        <div id="dept">{{dept}}</div>
+        <div id="emp-wrapper">
+          <div id="mng">
+              Manager:
+              {% for mng in mngbydept[dept] %} 
+                <div id="emp-row">{{mng}}</div>
+              {% endfor %}
+            </div>
+            <div id="emp">  
+              Staff:
+              {% for e in emp %} 
+                <div id="emp-row">{{e}}</div>
+              {% endfor %}
+            </div> 
+        </div>
       {% endfor %}
-
-  </div>
+    </div>
 
     <div id="employees" class="tabcontent">
         <h3>Employees</h3>
