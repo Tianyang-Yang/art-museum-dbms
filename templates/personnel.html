@@ -1,41 +1,43 @@
 <html>
-  <head>
-    <title>Art Museum DBMS</title>
 
-    <link rel="stylesheet" href="/static/index.css">
-    <link rel="stylesheet" href="/static/personnel.css">
-    <link rel="stylesheet" href="/static/dropdown.css">
-    <script src="/static/index.js"></script>
-    <script src="/static/dropdown.js"></script>
-    <style>
-      body{ 
+<head>
+  <title>Art Museum DBMS</title>
+
+  <link rel="stylesheet" href="/static/index.css">
+  <link rel="stylesheet" href="/static/personnel.css">
+  <link rel="stylesheet" href="/static/dropdown.css">
+  <script src="/static/index.js"></script>
+  <script src="/static/dropdown.js"></script>
+  <script src="/static/sorttable.js"></script>
+  <style>
+    body{ 
         font-size: 15pt;
         font-family: arial;
       }
     </style>
-  </head>
+</head>
 
 
 <body>
   <h1> Art Museum DBMS</h1>
   <div id="main-wrapper">
     <div class="topnav">
-        <div class="search-container">
-            <input type="text" placeholder="Enter your search here..." name="search">
-            <button type="submit" onclick="displayResult()">Search</button>
-        </div>
-        <div id="search-result">
-            This is the search result.
-        </div>
+      <div class="search-container">
+        <input type="text" placeholder="Enter your search here..." name="search">
+        <button type="submit" onclick="displayResult()">Search</button>
       </div>
-    
-      <div id="nav">
-        <ul>
-          <li><a href="index">Inventory</a></li>
-          <li><a href="personnel">Personnel</a></li>
-          <li><a href="customer">Customer</a></li>
-        </ul>
+      <div id="search-result">
+        This is the search result.
       </div>
+    </div>
+
+    <div id="nav">
+      <ul>
+        <li><a href="index">Inventory</a></li>
+        <li><a href="personnel">Personnel</a></li>
+        <li><a href="customer">Customer</a></li>
+      </ul>
+    </div>
 
     <div class="dropdown">
       <a href="adddept"><button class="dropbtn">Add Department</button></a>
@@ -52,56 +54,56 @@
       <button class="tablinks" onclick="openCity(event, 'departments')">Departments</button>
       <button class="tablinks" onclick="openCity(event, 'employees')">Employees</button>
     </div>
-  
+
     <!-- Tab content -->
     <div id="departments" class="tabcontent">
       <h3>Departments</h3>
       {% for dept, emp in empbydept.items() %}
-        <div id="dept">{{dept}}</div>
-        <div id="emp-wrapper">
-          <div id="mng">
-              Manager:
-              {% for mng in mngbydept[dept] %} 
-                <div id="emp-row">{{mng}}</div>
-              {% endfor %}
-            </div>
-            <div id="emp">  
-              Staff:
-              {% for e in emp %} 
-                <div id="emp-row">{{e}}</div>
-              {% endfor %}
-            </div> 
+      <div id="dept">{{dept}}</div>
+      <div id="emp-wrapper">
+        <div id="mng">
+          Manager:
+          {% for mng in mngbydept[dept] %}
+          <div id="emp-row">{{mng}}</div>
+          {% endfor %}
         </div>
+        <div id="emp">
+          Staff:
+          {% for e in emp %}
+          <div id="emp-row">{{e}}</div>
+          {% endfor %}
+        </div>
+      </div>
       {% endfor %}
     </div>
 
     <div id="employees" class="tabcontent">
-        <h3>Employees</h3>
-        <table class="tb">
-            <tr>
-                <th>Name</th>
-                <th>SSN</th> 
-                <th>Age</th>
-            </tr>
-            {% for a,b,c in emp_info %}
-            <tr> 
-              <td>{{a}}</td>
-              <td>{{b}}</td> 
-              <td>{{c}}</td>
-            </tr>
-            {% endfor %}  
-          </table>
+      <h3>Employees</h3>
+      <table class="tb sortable">
+        <tr>
+          <th>Name</th>
+          <th>SSN</th>
+          <th>Age</th>
+        </tr>
+        {% for a,b,c in emp_info %}
+        <tr>
+          <td>{{a}}</td>
+          <td>{{b}}</td>
+          <td>{{c}}</td>
+        </tr>
+        {% endfor %}
+      </table>
     </div>
-    
-    
+
+
 
   </div>
   <!-- main wrapper-->
 
 
-  
 
-<!-- <p><a href="another">Go to the other page</a></p>
+
+  <!-- <p><a href="another">Go to the other page</a></p>
 <div>{{data}}</div>
 
 <form method="POST" action="/add">

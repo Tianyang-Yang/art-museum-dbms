@@ -1,26 +1,41 @@
 <html>
-    <head>
-        <title>Add Art Piece</title>
-        <link rel="stylesheet" href="/static/index.css">
-        <style>
-                body{ 
-                  font-size: 15pt;
-                  font-family: arial;
-                }
-        </style>
-    </head>  
 
-    <body>
-     <div>
-            <form method="POST" action="/add_cust">
-                    Name:<br>
-                    <input class = "input-field" type="text" name="name"><br>
-                    Visit Date:<br>
-                    <input class = "input-field" type="text" name="visit-date"><br>
-                    
-                    <input class = "submit-btn" type="submit" value="Submit">
-                    
-                  </form>
-     </div>   
-    </body>
+<head>
+  <title>Add Art Piece</title>
+  <link rel="stylesheet" href="/static/index.css">
+  <link rel="stylesheet" href="/static/personnel.css">
+  <link rel="stylesheet" href="/static/dropdown.css">
+  <script src="/static/index.js"></script>
+  <script src="/static/dropdown.js"></script>
+  <script src="/static/sorttable.js"></script>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <form method="POST" action="/add_cust">
+      Name:<br>
+      <input class="input-field" type="text" name="name" required><br>
+      Visit Date:<br>
+      <input class="input-field" type="date" name="visit" required><br>
+      Exhibition Visited:<br>
+      <select name="exhib" class="custom-select" style="width:200px;" required>
+        <option>Select Exhibition</option>
+        {% for n in exhibdata %}
+        <option>{{n}}</option>
+        {% endfor %}
+      </select><br>
+      <input class="submit-btn" type="submit" value="Submit">
+    </form>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="goBack()">Return</button>
+    </div>
+  </div>
+</body>
+
 </html>

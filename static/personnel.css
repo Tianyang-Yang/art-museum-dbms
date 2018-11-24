@@ -1,31 +1,36 @@
-#dept {
-    background-color: lightgrey;
+#dept, #exhib {
+    background-color: #f1f1f1;
     padding: 15px;
-    width: 60%;
-    border: 1px solid lightgrey;
+    width: 100%;
+    border: 1px solid #f1f1f1;
 }
 
-#emp-wrapper {
-    border: 1px solid lightgrey;
-    width: 60%;
+#emp-wrapper, #ap-wrapper {
+    border: 1px solid #f1f1f1;
+    width: 100%;
     padding: 15px;
 }
-#emp-row {
+#emp-row, #ap-row {
     text-indent: 20px;
     padding: 5px 0px;
 }
 
 table {
-    width: 60%;
+    width: 100%;
 }
 
 th {
-    background-color: lightgrey;
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+th:hover {
+  background-color: #ddd;
 }
 
 th, td {
     padding: 15px 0px;
     text-align: center;
-    border: 1px solid lightgrey;
+    border: 1px solid #f1f1f1;
     font-size: 15pt;
 }

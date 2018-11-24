@@ -1,55 +1,57 @@
 <html>
-    <head>
-        <title>Update Employee Info</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <link rel="stylesheet" href="/static/index.css">
-        <link rel="stylesheet" href="/static/dropdown.css">
-        <script src="/static/index.js"></script>
-        <script src="/static/dropdown.js"></script>
-        <style>
-                body{ 
+
+<head>
+  <title>Update Employee Info</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="/static/index.css">
+  <link rel="stylesheet" href="/static/dropdown.css">
+  <script src="/static/index.js"></script>
+  <script src="/static/dropdown.js"></script>
+  <style>
+    body{ 
                   font-size: 15pt;
                   font-family: arial;
                 }
         </style>
-    </head>  
+</head>
 
-    <body>
-     <div>
-         
-            <form method="POST" action="/update_emp">
-            
-                
-                    Name:<br>
-                    <select name="name" id="custom-select" class="custom-select" style="width:200px;">
-                        <option>Select Name</option>
-                        {% for n in data %}
-                            <option>{{n}}</option>
-                            {% endfor %}
-                            </select><br>
-                    SSN:<br>
-                    <input class = "input-field" type="number" name="ssn"><br>
-                    Age:<br>
-                    <input class = "input-field" type="number" name="age"><br>
-                    Department:<br>
-                    <input class = "input-field" type="text" name="dept"><br>
-                    
-                    <input type="radio" name="position" value="manager" checked>Manager<br>
-                    <input type="radio" name="position" value="staff">Staff<br>
+<body>
+  <div>
 
-                    <input class = "submit-btn" type="submit" value="Submit">   
-                    
-                  </form>
-                  <div class="dropdown">
-                        <button class="dropbtn" onclick="goBack()">Return</button>
-                </div>
-                  
-     </div> 
-        <script>
-            // var value = document.getElementById("custom-select option:selected").textContent;
-            var value = $( "#custom-select option:selected" ).text();
+    <form method="POST" action="/update_emp">
+
+
+      Name:<br>
+      <select name="name" id="custom-select" class="custom-select" style="width:200px;" required>
+        <option>Select Name</option>
+        {% for n in data %}
+        <option>{{n}}</option>
+        {% endfor %}
+      </select><br>
+      SSN:<br>
+      <input class="input-field" type="number" name="ssn" required><br>
+      Age:<br>
+      <input class="input-field" type="number" name="age" required><br>
+      Department:<br>
+      <input class="input-field" type="text" name="dept" required><br>
+
+      <input type="radio" name="position" value="manager" checked>Manager<br>
+      <input type="radio" name="position" value="staff">Staff<br>
+
+      <input class="submit-btn" type="submit" value="Submit">
+
+    </form>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="goBack()">Return</button>
+    </div>
+
+  </div>
+  <script>
+    // var value = document.getElementById("custom-select option:selected").textContent;
+    var value = $("#custom-select option:selected").text();
 
             // document.getElementById("selected-name").innerHTML = value;
-        </script>
-    </body>
+  </script>
+</body>
+
 </html>

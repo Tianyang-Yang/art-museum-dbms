@@ -110,38 +110,50 @@ def index():
   print(request.args)
 
   # get entities data from databases 
-  artpieces = g.conn.execute("select name from artpieces")
-  apnames = []
+  # artpieces = g.conn.execute("select name from artpieces")
+  # apnames = []
+  # for result in artpieces:
+  #   apnames.append(result['name'])
+  # artpieces.close()
+  artpieces = g.conn.execute("select name, artist, year, genre, format from artpieces;")
+  name = []
+  artist = []
+  year = []
+  genre = []
+  fmt = []
   for result in artpieces:
-    apnames.append(result['name'])
+    name.append(result['name'])
+    artist.append(result['artist'])
+    year.append(result['year'])
+    genre.append(result['genre'])
+    fmt.append(result['format'])
   artpieces.close()
 
-  exhibitions = g.conn.execute("select name from exhibitions")
-  exhibnames = []
+  exhibitions = g.conn.execute("select exhibitions.name as exhib, artpieces.name as ap \
+                              from exhibitions, belongs_to, artpieces \
+                              where exhibitions.eid=belongs_to.eid and belongs_to.pid=artpieces.pid \
+                              union select name, null from exhibitions;")
+  exhib_ap = {}
   for result in exhibitions:
-    exhibnames.append(result['name'])
+    key = result['exhib']
+    if key not in exhib_ap:
+      if result['ap'] is not None:
+        exhib_ap[key] = [result['ap']]
+    else:
+      if result['ap'] is not None:
+        exhib_ap[key].append(result['ap'])
   exhibitions.close()
 
-  galleries = g.conn.execute("select name from galleries")
-  galnames = []
+  galleries = g.conn.execute("select name, location from galleries")
+  galname = []
+  location = []
   for result in galleries:
-    galnames.append(result['name'])
+    galname.append(result['name'])
+    location.append(result['location'])
   galleries.close()
 
-  employees = g.conn.execute("select name from employees")
-  empnames = []
-  for result in employees:
-    empnames.append(result['name'])
-  employees.close()
-
-  customers = g.conn.execute("select name from customers")
-  custnames = []
-  for result in customers:
-    custnames.append(result['name'])
-  customers.close()
-
-  context = dict(ap_data = apnames, exhib_data = exhibnames, gal_data = galnames, \
-                  emp_data = empnames, cust_data = custnames)
+  context = dict(apdata = zip(name, artist, year, genre, fmt), exhibdata = exhib_ap, \
+                 galdata = zip(galname, location))
   return render_template("index.html", **context)
 
 
@@ -208,7 +220,11 @@ def updateemp():
 
 @app.route('/addcust')
 def addcust():
-  return render_template("addcust.html")
+  exhibitions = g.conn.execute("select name from exhibitions;")
+  exhibnames = []
+  for result in exhibitions:
+    exhibnames.append(result['name'])
+  return render_template("addcust.html", exhibdata = exhibnames)
 
 @app.route('/personnel')
 def personnel():
@@ -272,12 +288,20 @@ def customer():
 
   customers = g.conn.execute("select name, visit from customers")
   cust = []
+  visit = []
   for result in customers:
-    cust.append(result)
+    cust.append(result['name'])
+    visit.append(result['visit'])
   customers.close()
 
-  context = dict(cust_data = cust)
+  exhibitions = g.conn.execute("select exhibitions.name from customers, visits, exhibitions \
+                          where customers.cid = visits.cid and visits.eid = exhibitions.eid;")
+  exhib = []
+  for result in exhibitions:
+    exhib.append(result['name'])
+  exhibitions.close()
 
+  context = dict(custdata = zip(cust, visit, exhib))
   return render_template("customer.html", **context)
 
 # # Example of adding new data to the database
@@ -320,8 +344,11 @@ def add_ap():
     except:
       return render_template("error.html")
   else:
-    aid = g.conn.execute("select aid from artists where name = '{}';".format(artist)).first()
-    aid = aid['aid']
+    try:
+      aid = g.conn.execute("select aid from artists where name = '{}';".format(artist)).first()
+      aid = aid['aid']
+    except:
+      return render_template("error.html")  
   try:  
     g.conn.execute(s)
     g.conn.execute("insert into creates(pid, aid) values ('{}', '{}');".format(pid, aid))
@@ -368,9 +395,13 @@ def add_exhib():
 # add gallery
 @app.route('/add_gal', methods=['POST'])
 def add_gal():
-  # write code here
-  #
-  #
+  name = request.form['name']
+  location = request.form['location']
+  try:
+    g.conn.execute("insert into galleries(name, location) values ('{}', '{}');" \
+                   .format(name, location))
+  except:
+    return render_template("error.html")
   return redirect('/index')
 
 # add department
@@ -380,7 +411,7 @@ def add_dept():
   did = g.conn.execute('select max(did) from departments').first()
   did = int(did['max'])+1
   s = "insert into departments(did, name) \
-        values ('{}', '{}');".format(did, name)
+       values ('{}', '{}');".format(did, name)
   try:
     g.conn.execute(s)
   except:
@@ -446,10 +477,20 @@ def update_emp():
 # add customer
 @app.route('/add_cust', methods=['POST'])
 def add_cust():
-  # write code here
-  #
-  #
-  return redirect('/')
+  name = request.form['name']
+  visit = request.form['visit']
+  exhib = request.form['exhib']
+  cid = g.conn.execute('select max(cid) from customers').first()
+  cid = int(cid['max'])+1
+  try:
+    g.conn.execute("insert into customers(cid, name, visit) \
+                    values ('{}', '{}', '{}');".format(cid, name, visit))
+    s = "select eid from exhibitions where name = '{}';".format(exhib)
+    eid = g.conn.execute(s).first()['eid']
+    g.conn.execute("insert into visits(cid, eid) values('{}', '{}')".format(cid, eid))
+  except:
+    return render_template("error.html")
+  return redirect('/customer')
 
 
 # main

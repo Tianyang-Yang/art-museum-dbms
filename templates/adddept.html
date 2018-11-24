@@ -1,30 +1,30 @@
 <html>
-    <head>
-        <title>Add Department</title>
-        <link rel="stylesheet" href="/static/index.css">
-        <link rel="stylesheet" href="/static/dropdown.css">
-        <script src="/static/index.js"></script>
-        <script src="/static/dropdown.js"></script>
-        <style>
-                body{ 
+
+<head>
+  <title>Add Department</title>
+  <link rel="stylesheet" href="/static/index.css">
+  <link rel="stylesheet" href="/static/dropdown.css">
+  <script src="/static/index.js"></script>
+  <script src="/static/dropdown.js"></script>
+  <style>
+    body{ 
                   font-size: 15pt;
                   font-family: arial;
                 }
         </style>
-    </head>  
+</head>
 
-    <body>
-     <div>
-            <form method="POST" action="/add_dept">
-                    Name:<br>
-                    <input class = "input-field" type="text" name="name"><br>
-                    
-                    <input class = "submit-btn" type="submit" value="Submit">
-                    
-            </form>
-            <div class="dropdown">
-                    <button class="dropbtn" onclick="goBack()">Return</button>
-            </div>
-     </div>   
-    </body>
+<body>
+  <div>
+    <form method="POST" action="/add_dept">
+      Name:<br>
+      <input class="input-field" type="text" name="name" required><br>
+      <input class="submit-btn" type="submit" value="Submit">
+    </form>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="goBack()">Return</button>
+    </div>
+  </div>
+</body>
+
 </html>
