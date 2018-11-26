@@ -136,4 +136,12 @@ function enterArtist(selected) {
   }
 }
 
+function search() {
+  var x = document.getElementById("search-input").value;
+  localStorage.setItem('input', x);
+  // var str = "You searched for: " + x;
+  // document.getElementById("repeat-search").innerHTML = str;
+}
+
+
 

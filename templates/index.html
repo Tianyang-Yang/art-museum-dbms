@@ -11,103 +11,128 @@
   <script src="/static/sorttable.js"></script>
   <style>
     body{ 
+      background-color: rgb(235, 233, 233);
       font-size: 15pt;
-      font-family: arial;
+      font-family: Arial;
     }
   </style>
 </head>
 
 <body>
-  <h1> Art Museum DBMS</h1>
+  <a id="logo" href="index">
+    <h1>MuseumManage</h1>
+  </a>
   <div id="main-wrapper">
-    <div class="topnav">
-      <div class="search-container">
-        <input type="text" placeholder="Enter your search here..." name="search">
-        <button type="submit" onclick="displayResult()">Search</button>
-      </div>
-      <div id="search-result">
-        This is the search result.
-      </div>
-    </div>
-
-    <div id="nav">
-      <ul>
-        <li><a href="index">Inventory</a></li>
-        <li><a href="personnel">Personnel</a></li>
-        <li><a href="customer">Customer</a></li>
-      </ul>
-    </div>
-
-    <div class="dropdown">
-      <a href="addap"><button class="dropbtn">Add Art Piece</button></a>
-    </div>
-    <div class="dropdown">
-      <a href="addexhib"><button class="dropbtn">Add Exhibition</button></a>
-    </div>
-    <div class="dropdown">
-      <a href="addgal"><button class="dropbtn">Add Gallery</button></a>
-    </div>
-
-    <div class="tab">
-      <button class="tablinks" onclick="openCity(event, 'artpieces')">Art Pieces</button>
-      <button class="tablinks" onclick="openCity(event, 'exhibitions')">Exhibitions</button>
-      <button class="tablinks" onclick="openCity(event, 'galleries')">Galleries</button>
-    </div>
-
-    <!-- Tab content -->
-    <div id="artpieces" class="tabcontent">
-      <h3>Art Pieces</h3>
-      <table class="tb sortable">
-        <tr>
-          <th>Name</th>
-          <th>Artist</th>
-          <th>Year</th>
-          <th>Genre</th>
-          <th>Format</th>
-        </tr>
-        {% for a,b,c,d,e in apdata %}
-        <tr>
-          <td>{{a}}</td>
-          <td>{{b}}</td>
-          <td>{{c}}</td>
-          <td>{{d}}</td>
-          <td>{{e}}</td>
-        </tr>
-        {% endfor %}
-      </table>
-    </div>
-
-    <div id="exhibitions" class="tabcontent">
-      <h3>Exhibitions</h3>
-      {% for exhib, ap in exhibdata.items() %}
-      <div id="exhib">{{exhib}}</div>
-      <div id="ap-wrapper">
-        <div id="ap">
-          {% for ap in exhibdata[exhib] %}
-          <div id="ap-row">{{ap}}</div>
-          {% endfor %}
+    <div id="header-sec">
+      <div class="topnav">
+        <div class="search-container">
+          <form method="POST" action="/dosearch">
+            <input id="search-input" type="text" placeholder="Search for an art piece..." name="search">
+            <input style="display: inline-block" id="auto-submit" class="submit-btn" type="submit" value="Search">
+          </form>
+          <a href="dosearch"><button id="search-button" type="submit" onclick="autoSubmit()">Search</button></a>
+          <!-- <button id="search-button" type="submit" onclick="autoSubmit()">Search</button> -->
         </div>
       </div>
-      {% endfor %}
+
+      <div id="nav">
+        <ul>
+          <li><a href="index">Inventory</a></li>
+          <li><a href="personnel">Personnel</a></li>
+          <li><a href="customer">Customer</a></li>
+        </ul>
+      </div>
     </div>
 
-    <div id="galleries" class="tabcontent">
-      <h3>Galleries</h3>
-      <table class="tb sortable">
-        <tr>
-          <th>Name</th>
-          <th>Location</th>
-        </tr>
-        {% for a,b in galdata %}
-        <tr>
-          <td>{{a}}</td>
-          <td>{{b}}</td>
-        </tr>
+    <div id="content-sec">
+      <div id="btn-sec">
+        <div class="dropdown">
+          <a href="addap"><button class="dropbtn">Add Art Piece</button></a>
+        </div>
+        <div class="dropdown">
+          <a href="addexhib"><button class="dropbtn">Add Exhibition</button></a>
+        </div>
+        <div class="dropdown">
+          <a href="addgal"><button class="dropbtn">Add Gallery</button></a>
+        </div>
+      </div>
+
+      <div class="tab">
+        <button class="tablinks" onclick="openCity(event, 'artpieces')">Art Pieces</button>
+        <button class="tablinks" onclick="openCity(event, 'exhibitions')">Exhibitions</button>
+        <button class="tablinks" onclick="openCity(event, 'galleries')">Galleries</button>
+      </div>
+
+      <!-- Tab content -->
+      <div id="artpieces" class="tabcontent">
+        <h3>Art Pieces</h3>
+        <table class="tb sortable">
+          <tr>
+            <th>Name</th>
+            <th>Artist</th>
+            <th>Year</th>
+            <th>Genre</th>
+            <th>Format</th>
+          </tr>
+          {% for a,b,c,d,e in apdata %}
+          <tr>
+            <td>{{a}}</td>
+            <td>{{b}}</td>
+            <td>{{c}}</td>
+            <td>{{d}}</td>
+            <td>{{e}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+
+      <div id="exhibitions" class="tabcontent">
+        <h3>Exhibitions</h3>
+        {% for exhib, ap in exhibdata.items() %}
+        <div id="exhib">{{exhib}}</div>
+        <div id="ap-wrapper">
+          <div id="ap">
+            {% for ap in exhibdata[exhib] %}
+            <div id="ap-row">{{ap}}</div>
+            {% endfor %}
+          </div>
+        </div>
         {% endfor %}
-      </table>
+      </div>
+
+      <div id="galleries" class="tabcontent">
+        <h3>Galleries</h3>
+        <table class="tb sortable">
+          <tr>
+            <th>Name</th>
+            <th>Location</th>
+          </tr>
+          {% for a,b in galdata %}
+          <tr>
+            <td>{{a}}</td>
+            <td>{{b}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+
+    <div id="footer-sec">
+      <h4 id="footer">&copy; MuseumManage 2018</h4>
+      <div id="footnote">By Wenqi Wang, Tianyang Yang</div>
     </div>
   </div>
   <!-- main wrapper-->
+
+  <script>
+    function autoSubmit() {
+      window.onload = function () {
+        var button = document.getElementById('auto-submit');
+        button.form.submit();
+      }
+    }
+
+  </script>
 </body>
 
 </html>

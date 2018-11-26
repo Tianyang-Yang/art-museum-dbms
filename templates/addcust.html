@@ -10,6 +10,7 @@
   <script src="/static/sorttable.js"></script>
   <style>
     body{ 
+      letter-spacing: 1pt;
       font-size: 15pt;
       font-family: arial;
     }
@@ -24,7 +25,7 @@
       Visit Date:<br>
       <input class="input-field" type="date" name="visit" required><br>
       Exhibition Visited:<br>
-      <select name="exhib" class="custom-select" style="width:200px;" required>
+      <select name="exhib" class="custom-select" style="width:400px;" required>
         <option>Select Exhibition</option>
         {% for n in exhibdata %}
         <option>{{n}}</option>

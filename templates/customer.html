@@ -9,76 +9,78 @@
   <script src="/static/dropdown.js"></script>
   <script src="/static/sorttable.js"></script>
   <style>
-    body{ 
-        font-size: 15pt;
-        font-family: arial;
-      }
-    </style>
+    body {
+      background-color: rgb(235, 233, 233);
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
 </head>
 
 
 <body>
-  <h1> Art Museum DBMS</h1>
+  <a id="logo" href="index">
+    <h1>MuseumManage</h1>
+  </a>
   <div id="main-wrapper">
-    <div class="topnav">
-      <div class="search-container">
-        <input type="text" placeholder="Enter your search here..." name="search">
-        <button type="submit" onclick="displayResult()">Search</button>
+    <div id="header-sec">
+      <div class="topnav">
+        <!-- <div class="search-container">
+          <input type="text" placeholder="Enter your search here..." name="search">
+          <button type="submit" onclick="displayResult()">Search</button>
+        </div>
+        <div id="search-result">
+          This is the search result.
+        </div> -->
       </div>
-      <div id="search-result">
-        This is the search result.
+
+      <div id="nav">
+        <ul>
+          <li><a href="index">Inventory</a></li>
+          <li><a href="personnel">Personnel</a></li>
+          <li><a href="customer">Customer</a></li>
+        </ul>
       </div>
     </div>
 
-    <div id="nav">
-      <ul>
-        <li><a href="index">Inventory</a></li>
-        <li><a href="personnel">Personnel</a></li>
-        <li><a href="customer">Customer</a></li>
-      </ul>
+    <div id="content-sec">
+      <div id="btn-sec">
+        <div class="dropdown">
+          <a href="addcust"><button class="dropbtn">Add Customer</button></a>
+        </div>
+      </div>
+
+      <div class="tab">
+        <button class="tablinks" onclick="openCity(event, 'customers')">Customers</button>
+      </div>
+
+
+      <!-- Tab content -->
+      <div id="customers" class="tabcontent">
+        <h3>Customers</h3>
+        <table class="tb sortable">
+          <tr>
+            <th>Name</th>
+            <th>Visit Date</th>
+            <th>Exhibition Visited</th>
+          </tr>
+          {% for a,b,c in custdata %}
+          <tr>
+            <td>{{a}}</td>
+            <td>{{b}}</td>
+            <td>{{c}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
     </div>
 
-    <div class="dropdown">
-      <a href="addcust"><button class="dropbtn">Add Customer</button></a>
+    <div id="footer-sec">
+      <h4 id="footer">&copy; MuseumManage 2018</h4>
+      <div id="footnote">By Wenqi Wang, Tianyang Yang</div>
     </div>
-  </div>
-
-  <div class="tab">
-    <button class="tablinks" onclick="openCity(event, 'customers')">Customers</button>
-  </div>
-
-  <!-- Tab content -->
-  <div id="customers" class="tabcontent">
-    <h3>Customers</h3>
-    <table class="tb sortable">
-      <tr>
-        <th>Name</th>
-        <th>Visit Date</th>
-        <th>Exhibition Visited</th>
-      </tr>
-      {% for a,b,c in custdata %}
-      <tr>
-        <td>{{a}}</td>
-        <td>{{b}}</td>
-        <td>{{c}}</td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
-
   </div>
   <!-- main wrapper-->
-
-
-
-
-  <!-- <p><a href="another">Go to the other page</a></p>
-<div>{{data}}</div>
-
-<form method="POST" action="/add">
-<p>Name of new computer scientist: <input type="text" name="name"> <input type="submit" value="Add"></p>
-</form> -->
-
 </body>
 
 

@@ -304,6 +304,7 @@ def customer():
   context = dict(custdata = zip(cust, visit, exhib))
   return render_template("customer.html", **context)
 
+
 # # Example of adding new data to the database
 # @app.route('/add', methods=['POST'])
 # def add():
@@ -492,6 +493,32 @@ def add_cust():
     return render_template("error.html")
   return redirect('/customer')
 
+# do search
+@app.route('/dosearch', methods=['GET', 'POST'])
+def dosearch():
+  search_input = ''
+  if request.method == 'POST':
+    search_input = request.form['search']
+    result_list = []
+    pid_list = []
+    result = g.conn.execute("select pid, name, year, artist, genre, format from artpieces \
+                            where year::text ilike '%%{}%%' or name ilike '%%{}%%' \
+                            or genre ilike '%%{}%%' or format ilike '%%{}%%' or artist ilike '%%{}%%';" \
+                            .format(search_input, search_input, search_input, search_input, search_input))
+    for r in result:
+      fields = ""
+      fields += ('Name: ' + r['name'] + '| ')
+      fields += ('Year: ' + str(r['year']) + ' | ')
+      fields += ('Artist: ' + r['artist'] + '| ')
+      fields += ('Genre: ' + r['genre'] + '| ')
+      fields += ('Format: ' + r['format'])
+      result_list.append(fields)
+      pid_list.append(r['pid'])
+
+    return render_template('dosearch.html', inputdata = search_input, apdata = result_list)
+  return redirect('/index')
+    
+
 
 # main
 if __name__ == "__main__":
@@ -517,7 +544,7 @@ if __name__ == "__main__":
 
     HOST, PORT = host, port
     print("running on %s:%d" % (HOST, PORT))
-    app.run(host=HOST, port=PORT, debug=debug, threaded=threaded)
+    app.run(host=HOST, port=PORT, debug=True, threaded=threaded)
 
 
   run()

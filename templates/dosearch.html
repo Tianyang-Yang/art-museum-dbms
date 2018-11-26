@@ -1,0 +1,49 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="/static/index.css">
+  <link rel="stylesheet" href="/static/dropdown.css">
+  <script src="/static/index.js"></script>
+  <script src="/static/dropdown.js"></script>
+  <style>
+    body {
+      letter-spacing: 1pt;
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="goBack()">Return</button>
+    </div>
+    <div>
+      <div>You searched for: {{inputdata}} </div></br>
+      <div> <strong>Art Piece Information</strong></div>
+      <div>{% for n in noresdata %}
+        {{noresdata}}
+        {% endfor %}</div>
+      <ol>
+        {% for n in apdata %}
+        <li id="result-row">{{n}}
+        </li>
+        {% endfor %}
+      </ol>
+
+    </div>
+
+    <!-- <script>
+    var searched = localStorage.getItem('input');
+    var str = "You searched for: " + searched;
+    document.getElementById("repeat-search").innerHTML = str;
+    document.getElementById("input-label").innerHTML = searched;
+    window.onload = function () {
+      var button = document.getElementById('auto-submit');
+      button.form.submit();
+    }
+  </script> -->
+</body>
+
+</html>

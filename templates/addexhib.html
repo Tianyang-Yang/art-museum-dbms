@@ -8,6 +8,7 @@
   <script src="/static/dropdown.js"></script>
   <style>
     body{ 
+      letter-spacing: 1pt;
                   font-size: 15pt;
                   font-family: arial;
                 }
@@ -24,7 +25,7 @@
       End Date:<br>
       <input class="input-field" type="date" name="end-date" required><br>
       Gallery:<br>
-      <select name="gal" class="custom-select" style="width:200px;" required>
+      <select name="gal" class="custom-select" style="width:400px;" required>
         <option>Select Gallery</option>
         {% for n in galdata %}
         <option>{{n}}</option>

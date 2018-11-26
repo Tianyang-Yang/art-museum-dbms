@@ -9,6 +9,7 @@
   <script src="/static/dropdown.js"></script>
   <style>
     body{ 
+      letter-spacing: 1pt;
                   font-size: 15pt;
                   font-family: arial;
                 }
@@ -22,7 +23,7 @@
 
 
       Name:<br>
-      <select name="name" id="custom-select" class="custom-select" style="width:200px;" required>
+      <select name="name" id="custom-select" class="custom-select" style="width:400px;" required>
         <option>Select Name</option>
         {% for n in data %}
         <option>{{n}}</option>

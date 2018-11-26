@@ -1,31 +1,81 @@
+#logo {
+  text-decoration: none;
+}
+
+h1 {
+  padding: 10px 10px;
+  color: rgb(41, 41, 41);
+  letter-spacing: 1.5pt;
+  font-size: 26px;
+}
+
+#header-sec {
+  background-color: #cacaca;
+  padding: 1px 10px;
+  letter-spacing: 1pt;
+}
+
+#content-sec {
+  background-color: #cacaca;
+  margin-top: 30px;  
+}
+
+#btn-sec {
+  padding: 10px 10px;
+  padding-bottom: 0px;
+  letter-spacing: 1pt;
+}
+
+#footer-sec {
+  margin: 50px 0px;
+  float: center;
+  text-align: center;
+}
+
+#footer {
+  font-size: 16px;
+  letter-spacing: 1pt;
+  color: rgb(41, 41, 41);
+  margin-bottom: 10px;
+}
+
+#footnote {
+  color: grey;
+  font-size: 12px;
+  letter-spacing: 1pt;
+}
+
 .topnav .search-container{
     overflow: hidden;
     background-color: #f1f1f1;
     border: 1px solid #ccc;
     height: 51px;
-    margin-bottom: 10px;
+    margin: 10px 0px;
   }
-
-/* .topnav .search-container {
-  float: right;
-} */
 
 .topnav input[type=text] {
   padding: 6px;
   margin: 8px 15px;
   font-size: 17px;
   border: none;
-  width: 90%;
+  width: 82%;
+  letter-spacing: 1pt;
+}
+
+#auto-submit {
+  height: 32px;
+  padding: 7px;
 }
   
 .topnav .search-container button {
-  padding: 6px 15px;
+  padding: 6px 10px;
   margin-top: 8px;
-  margin-right: 16px;
+  margin-right: 10px;
   background: #ddd;
   font-size: 17px;
   border: none;
   cursor: pointer;
+  letter-spacing: 1pt;
 }
 
 .topnav .search-container button:hover {
@@ -45,6 +95,8 @@ ul {
   padding: 0;
   overflow: hidden;
   background-color: #333;
+  margin-bottom: 10px;
+  padding-bottom: 0px;
 }
 
 li {
@@ -68,10 +120,13 @@ li a:hover {
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .tablinks {
     font-size: 15pt;
+    letter-spacing: 1pt;
 }
 
 /* Style the buttons that are used to open the tab content */
@@ -92,7 +147,7 @@ li a:hover {
 
 /* Create an active/current tablink class */
 .tab button.active {
-    background-color: #ccc;
+    background-color: rgb(223, 223, 223);
 }
 
 /* Style the tab content */
@@ -101,6 +156,9 @@ li a:hover {
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
+    background-color: white;
+    letter-spacing: 0.5pt;
+    font-size: 13pt;
 }
 
 .submit-btn {
@@ -114,6 +172,7 @@ li a:hover {
   border: none;
   cursor: pointer;
   margin-bottom: 10px;
+  letter-spacing: 1pt;
 }
 
 /* Dropdown button on hover & focus */
@@ -126,14 +185,17 @@ li a:hover {
   margin: 10px 0px;
   padding: 10px;
   font-size: 14px;
+  letter-spacing: 1pt;
 }
 
 .custom-select {
   position: relative;
   font-family: Arial;
   height: 40px;
+  width: 400px;
   margin: 10px 0px;
   font-size: 16px;
+  letter-spacing: 1pt;
 }
 .custom-select select {
   display: none; /*hide original SELECT element:*/
@@ -198,4 +260,12 @@ li a:hover {
 
 #artist-info {
   display: none;
+}
+
+#artpieces, #departments, #customers {
+  display: block;
+}
+
+#result-row {
+  margin: 10px 0px;
 }

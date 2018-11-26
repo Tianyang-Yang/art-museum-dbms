@@ -8,15 +8,16 @@
   <script src="/static/dropdown.js"></script>
   <style>
     body{ 
-            font-size: 15pt;
-            font-family: arial;
-        }
-    </style>
+      letter-spacing: 1pt;
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
 </head>
 
 <body>
   <div>
-    <form method="POST" action="/add_ap" novalidate>
+    <form method="POST" action="/add_ap">
       Name:<br>
       <input class="input-field" type="text" name="name" required><br>
       Year:<br>
@@ -26,7 +27,7 @@
       Format:<br>
       <input class="input-field" type="text" name="format" required><br>
       Artist:<br>
-      <select name="artist" class="custom-select" onchange="enterArtist(this)" style="width:200px;">
+      <select name="artist" class="custom-select" onchange="enterArtist(this)" style="width:400px;">
         <option>Select Artist</option>
         {% for n in artistdata %}
         <option>{{n}}</option>
