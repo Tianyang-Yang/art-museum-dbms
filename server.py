@@ -370,12 +370,12 @@ def add_exhib():
 
   pids = []
   for a in ap:
-      try:
-        pid = g.conn.execute("select pid from artpieces where name = '{}';".format(a)).first()
-        pid = int(pid['pid'])
-      except: 
-        return render_template("error.html")    
-      pids.append(pid)
+    try:
+      pid = g.conn.execute("select pid from artpieces where name = '{}';".format(a)).first()
+      pid = int(pid['pid'])
+    except: 
+      return render_template("error.html")    
+    pids.append(pid)
 
   s1 = "insert into exhibitions(eid, name, begin, until) \
         values ('{}', '{}', '{}', '{}');".format(eid, name, begin, until)  
